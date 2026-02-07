@@ -6,7 +6,7 @@ import ParallaxSection from "./ParallaxSection";
 export default function Letter() {
   return (
     <ParallaxSection>
-    <section className="letter">
+    <div className="letter">
       <motion.div
         className="paper"
         initial={{ opacity: 0, y: 40 }}
@@ -23,7 +23,7 @@ export default function Letter() {
           I want real.
         </p>
       </motion.div>
-    </section>
+    </div>
     </ParallaxSection>
   );
 }

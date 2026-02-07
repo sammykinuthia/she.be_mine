@@ -14,7 +14,7 @@ export default function Memory() {
 
   return (
     <ParallaxSection>
-    <section className="memory">
+    <div className="memory">
       <div
         className="memory-card"
         onClick={() =>
@@ -23,7 +23,7 @@ export default function Memory() {
       >
         {msg}
       </div>
-    </section>
+    </div>
     </ParallaxSection>
   );
 }

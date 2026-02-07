@@ -5,7 +5,7 @@ import ParallaxSection from "./ParallaxSection";
 export default function Promise() {
   return (
     <ParallaxSection>
-    <section className="promise">
+    <div className="promise">
       <motion.div
         className="card"
         initial={{ opacity: 0, scale: 0.9 }}
@@ -21,7 +21,7 @@ export default function Promise() {
           That’s my Valentine promise.
         </p>
       </motion.div>
-    </section>
+    </div>
     </ParallaxSection>
   );
 }

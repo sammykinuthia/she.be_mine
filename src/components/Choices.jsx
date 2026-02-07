@@ -7,7 +7,7 @@ export default function Choices() {
 
   return (
     <ParallaxSection>
-    <section className="choices">
+    <div className="choices">
       <h2>Quick Question 😏</h2>
       <p>Choose what sounds like us:</p>
 
@@ -25,7 +25,7 @@ export default function Choices() {
           Of course… it’s <strong>{choice === "late" ? "both" : "both"}</strong>.
         </p>
       )}
-    </section>
+    </div>
     </ParallaxSection>
   );
 }

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { FaMusic } from "react-icons/fa";
+import { FaMusic, FaVolumeMute } from "react-icons/fa";
 
 export default function Music() {
   const audioRef = useRef(null);
@@ -27,9 +27,9 @@ export default function Music() {
 
   return (
     <>
-      <audio ref={audioRef} src="/love.mp3" loop />
-      <button className="music-btn" onClick={toggle}>
-        <FaMusic />
+      <audio ref={audioRef} src="/instrumental_love.mp3" loop />
+      <button style={{cursor:"pointer"}} className="music-btn" onClick={toggle}>
+        {!playing ? <FaVolumeMute /> : <FaMusic />}
       </button>
     </>
   );

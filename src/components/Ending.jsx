@@ -5,7 +5,7 @@ import ParallaxSection from "./ParallaxSection";
 export default function Ending() {
     return (
         <ParallaxSection>
-            <section className="ending">
+            <div className="ending">
                 <h2>Happy Valentine’s Day</h2>
                 <p>
                     This isn’t a moment.
@@ -15,7 +15,7 @@ export default function Ending() {
                     — Samuel Mwaniki Kinuthia
                 </span>
 
-            </section>
+            </div>
         </ParallaxSection>
     );
 }

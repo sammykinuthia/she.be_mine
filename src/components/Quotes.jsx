@@ -15,7 +15,7 @@ const quotes = [
 export default function Quotes() {
   return (
     <ParallaxSection>
-    <section className="quotes">
+    <div className="quotes">
       {quotes.map((q, i) => (
         <motion.p
           key={i}
@@ -26,7 +26,7 @@ export default function Quotes() {
           “{q}”
         </motion.p>
       ))}
-    </section>
+    </div>
     </ParallaxSection>
   );
 }

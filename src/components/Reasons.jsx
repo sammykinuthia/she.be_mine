@@ -12,7 +12,7 @@ const reasons = [
 export default function Reasons() {
   return (
     <ParallaxSection>
-    <section className="reasons">
+    <div className="reasons">
       <h2>Why You?</h2>
       <div className="cards">
         {reasons.map((r, i) => (
@@ -28,7 +28,7 @@ export default function Reasons() {
           </motion.div>
         ))}
       </div>
-    </section>
+    </div>
     </ParallaxSection>
   );
 }
