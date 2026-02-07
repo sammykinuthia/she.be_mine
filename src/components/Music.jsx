@@ -11,14 +11,18 @@ export default function Music() {
 
     if (!playing) {
       audio.volume = 0;
-      audio.play();
-      let v = 0;
-      const fade = setInterval(() => {
-        if (v < 0.6) {
-          v += 0.05;
-          audio.volume = v;
-        } else clearInterval(fade);
-      }, 150);
+      audio.volume = 0;
+      audio.play().then(() => {
+        let v = 0;
+        const fade = setInterval(() => {
+          if (v < 0.6) {
+            v += 0.05;
+            audio.volume = v;
+          } else clearInterval(fade);
+        }, 150);
+      }).catch((error) => {
+        console.error("Audio playback failed:", error);
+      });
     } else {
       audio.pause();
     }
