@@ -6,21 +6,9 @@ export default function Music() {
   const [playing, setPlaying] = useState(false);
   const fadeInterval = useRef(null);
 
-  useEffect(() => {
-    // Initialize the audio object directly
-    // Ensure the file is in the 'public' folder
-    audioRef.current = new Audio("/instrumental_love.mp3");
-    audioRef.current.loop = true;
-
-    // Cleanup: Stop music if the component unmounts
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-      clearInterval(fadeInterval.current);
-    };
-  }, []);
+  // Detect if the device is mobile (where volume control is restricted)
+  const isMobile = typeof window !== "undefined" && 
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   const toggle = () => {
     const audio = audioRef.current;
@@ -29,20 +17,24 @@ export default function Music() {
     clearInterval(fadeInterval.current);
 
     if (!playing) {
-      audio.volume = 0;
-      // The browser allows .play() because it is inside this click handler
-      audio.play()
-        .then(() => {
+      // Mobile fix: Skip volume fading logic because it's ignored/unsupported
+      if (isMobile) {
+        audio.volume = 1; // Force full volume (device buttons handle the rest)
+        audio.play().then(() => setPlaying(true)).catch(err => console.error(err));
+      } else {
+        // Desktop: Keep the nice fade-in
+        audio.volume = 0;
+        audio.play().then(() => {
           setPlaying(true);
           fadeInterval.current = setInterval(() => {
-            if (audio.volume < 0.5) {
+            if (audio.volume < 0.6) {
               audio.volume = Math.min(audio.volume + 0.05, 0.6);
             } else {
               clearInterval(fadeInterval.current);
             }
           }, 100);
-        })
-        .catch((err) => console.error("Playback blocked:", err));
+        }).catch(err => console.error(err));
+      }
     } else {
       audio.pause();
       setPlaying(false);
@@ -50,23 +42,40 @@ export default function Music() {
   };
 
   return (
-    <button 
-      onClick={toggle} 
-      style={{
-        background: "rgba(255, 255, 255, 0.15)",
-        border: "1px solid rgba(255, 255, 255, 0.3)",
-        borderRadius: "50%",
-        width: "50px",
-        height: "50px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-        color: "white",
-        backdropFilter: "blur(5px)"
-      }}
-    >
-      {playing ? <FaMusic size={20} /> : <FaVolumeMute size={20} />}
-    </button>
+    <>
+      {/* On mobile, 'preload="auto"' is sometimes ignored unless 'autoPlay' is present.
+        We add 'playsInline' for broader compatibility.
+      */}
+      <audio 
+        ref={audioRef} 
+        src="/instrumental_love.mp3" 
+        loop 
+        preload="auto"
+        playsInline 
+      />
+      
+      <button 
+        className="music-btn" 
+        onClick={toggle}
+        type="button"
+        style={{ 
+          cursor: "pointer", 
+          border: "none", 
+          background: "none",
+          padding: "10px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+        aria-label={playing ? "Mute Music" : "Play Music"}
+      >
+        {/* We use a ternary to ensure the icon switches regardless of the audio state */}
+        {!playing ? (
+          <FaVolumeMute size={24} style={{ color: "white" }} />
+        ) : (
+          <FaMusic size={24} style={{ color: "white" }} />
+        )}
+      </button>
+    </>
   );
 }
